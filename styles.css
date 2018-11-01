@@ -1,0 +1,19 @@
+body {
+	background-color: lightgray;
+}
+h1 {
+	text-align: center;
+	width: 100%;
+}
+.fixed-bottom {
+	padding: 15px;
+	background-color: lightgray;
+}
+.chat {
+	background-color: gray;
+	height: 100%;
+}
+.btn {
+	 width: 100%; 
+	 height: 100%;
+}
