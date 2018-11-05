@@ -2,7 +2,7 @@
 
 $alert = null;
 
-$myFile = fopen("log.txt", "a") or die("Unable to open file!");			
+$myFile = fopen("log.txt", "a+") or die("Unable to open file!");			
 
 if (isset($_POST['submit'])) {
 
@@ -10,9 +10,8 @@ if (isset($_POST['submit'])) {
 		
 		if (isset($_POST['text']) && !empty($_POST['text'])) {
 
-			$txt = date("Y/m/d H:i:s ") . "IP:" . $_SERVER['REMOTE_ADDR'] . " <" . $_POST['username'] . "> left new text message in chat \n";
+			$txt = date("Y/m/d H:i:s@# ") . "IP:" . $_SERVER['REMOTE_ADDR'] . "@# " . $_POST['username'] . "@# " . $_POST['text'] . "\n";
 			fwrite($myFile, $txt);
-			fclose($myFile);
 
 		} else {
 
@@ -26,12 +25,12 @@ if (isset($_POST['submit'])) {
 	}
 }
 
-$chats[] = $chat;
+$chats = [];
 
-// while(!feof($myFile)) {
-// 	echo fgets($myFile) . "<br>";
-// }
-// fclose($myfile);
+while(!feof($myFile)) {
+	$chats[] = fgets($myFile);
+}
+fclose($myFile);
 
 
 
@@ -51,11 +50,14 @@ $chats[] = $chat;
 		<div class="row"><h1>Chat</h1></div>
 		<?= $alert ?>
 		<div class="row chat">
+		<pre>
 			<?php 
-			while(!feof($myFile)) {
-				echo fgets($myFile) . "<br>";
-			}
-			fclose($myfile);
+			print_r(explode('@#', $chats));
+			// print_r(file("log.txt"));
+			// while(!feof($myFile)) {
+			// 	echo fgets($myFile) . "<br>";
+			// }
+			// fclose($myFile);
 			?>
 		</div>
 		<form action="index.php" method="post">
